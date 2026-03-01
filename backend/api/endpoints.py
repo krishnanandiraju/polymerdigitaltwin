@@ -51,6 +51,17 @@ async def get_snapshot():
         snapshot["scrap_risk"] = scrap_risk
         print(f"[DEBUG] Scrap risk: {scrap_risk}")
 
+        # Convert CavityRisk objects to dicts for JSON serialization
+        snapshot["cavity_risks"] = [
+            {
+                "cavity": cr.cavity,
+                "risk_score": cr.risk_score,
+                "rejected_count": cr.rejected_count,
+                "defect_types": cr.defect_types
+            } if hasattr(cr, 'cavity') else cr
+            for cr in snapshot["cavity_risks"]
+        ]
+
         print("[DEBUG] Snapshot complete!")
         return snapshot
     except Exception as e:

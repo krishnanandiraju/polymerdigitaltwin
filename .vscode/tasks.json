@@ -1,0 +1,101 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Demo: Start",
+            "type": "shell",
+            "command": "bash scripts/demo/start.sh",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "focus": true,
+                "clear": true
+            },
+            "isBackground": false,
+            "problemMatcher": []
+        },
+        {
+            "label": "Demo: Stop",
+            "type": "shell",
+            "command": "bash scripts/demo/stop.sh",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "focus": true,
+                "clear": true
+            },
+            "isBackground": false,
+            "problemMatcher": []
+        },
+        {
+            "label": "Demo: Status",
+            "type": "shell",
+            "command": "bash scripts/demo/status.sh",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "focus": false,
+                "clear": true
+            },
+            "isBackground": false,
+            "problemMatcher": []
+        },
+        {
+            "label": "Backend: Run (foreground)",
+            "type": "shell",
+            "command": "cd backend && python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload",
+            "group": "build",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "focus": false
+            },
+            "problemMatcher": [
+                {
+                    "pattern": {
+                        "regexp": "ERROR",
+                        "file": 1,
+                        "line": 2,
+                        "message": 3
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "INFO:.*uvicorn",
+                        "endsPattern": "Application startup complete"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Frontend: Run (foreground)",
+            "type": "shell",
+            "command": "cd frontend && npm run dev -- --host 0.0.0.0 --port 5173",
+            "group": "build",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "focus": false
+            },
+            "problemMatcher": [
+                {
+                    "pattern": {
+                        "regexp": "ERROR",
+                        "file": 1,
+                        "line": 2,
+                        "message": 3
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "VITE",
+                        "endsPattern": "ready in"
+                    }
+                }
+            ]
+        }
+    ]
+}

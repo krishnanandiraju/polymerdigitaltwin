@@ -2,16 +2,17 @@ import { motion } from 'framer-motion';
 import { CavityRisk } from '../api';
 
 interface CavityHeatmapProps {
-    risks: CavityRisk[];
+    risks?: CavityRisk[] | null;
 }
 
-function CavityHeatmap({ risks }: CavityHeatmapProps) {
+function CavityHeatmap({ risks = [] }: CavityHeatmapProps) {
     // Create a 6x8 grid for 48 cavities
     const gridSize = { rows: 6, cols: 8 };
     const cavities = Array.from({ length: 48 }, (_, i) => i + 1);
+    const safeRisks = risks || [];
 
     const getCavityRisk = (cavity: number): CavityRisk | undefined => {
-        return risks.find(r => r.cavity === cavity);
+        return safeRisks.find(r => r?.cavity === cavity);
     };
 
     const getRiskColor = (riskScore: number): string => {

@@ -4,11 +4,11 @@ import { Alert } from '../api';
 import { acknowledgeAlert } from '../api';
 
 interface NotificationsProps {
-    alerts: Alert[];
+    alerts?: Alert[] | null;
 }
 
-function Notifications({ alerts }: NotificationsProps) {
-    const [activeAlerts, setActiveAlerts] = useState<Alert[]>(alerts);
+function Notifications({ alerts = [] }: NotificationsProps) {
+    const [activeAlerts, setActiveAlerts] = useState<Alert[]>(alerts || []);
     const [acknowledging, setAcknowledging] = useState<string | null>(null);
 
     const handleAcknowledge = async (alertId: string) => {
@@ -72,8 +72,8 @@ function Notifications({ alerts }: NotificationsProps) {
     return (
         <div className="fixed bottom-4 right-4 z-50 space-y-3 max-w-sm w-full">
             <AnimatePresence>
-                {activeAlerts
-                    .filter(alert => !alert.acknowledged)
+                {(activeAlerts || [])
+                    .filter(alert => alert && !alert.acknowledged)
                     .slice(0, 3)
                     .map((alert) => (
                         <motion.div

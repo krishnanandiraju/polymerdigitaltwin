@@ -5,6 +5,8 @@ export default defineConfig({
     plugins: [react()],
     server: {
         port: 5173,
+        // host: true binds to 0.0.0.0 — required for GitHub Codespaces port forwarding
+        host: true,
         proxy: {
             '/api': {
                 target: 'http://localhost:8000',

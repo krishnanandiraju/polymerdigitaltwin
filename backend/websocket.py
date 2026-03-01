@@ -94,7 +94,9 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         # Send initial snapshot
         snapshot = simulator.get_snapshot()
-        await websocket.send_json(snapshot, default=str)
+        # Convert snapshot to JSON-serializable format
+        serialized = json.dumps(snapshot, default=str)
+        await websocket.send_text(serialized)
 
         while True:
             data = await websocket.receive_text()

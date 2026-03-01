@@ -60,7 +60,85 @@ manasPolymers/
 └── README.md                   # Project documentation
 ```
 
-## Setup & Running
+## 🚀 Codespaces Demo VM
+
+Run the entire stack in a browser — zero local install required.
+
+### 1. Create a Codespace
+
+1. Push this repo to GitHub (if not already there).
+2. Click **Code → Codespaces → Create codespace on main**.
+3. Wait ~2 min for the container to build and `postCreateCommand` to install all deps.
+   - Python packages from `backend/requirements.txt` are installed automatically.
+   - Node packages from `frontend/package.json` are installed automatically.
+4. The server is **not** started automatically — this keeps compute costs low.
+
+### 2. Start the Demo
+
+**Option A — VS Code Task (recommended)**
+
+Press `Ctrl+Shift+P` → `Tasks: Run Task` → **Demo: Start**
+
+**Option B — Terminal**
+```bash
+make demo
+# or
+bash scripts/demo/start.sh
+```
+
+Both commands start the FastAPI backend (`:8000`) and Vite frontend (`:5173`) as
+background processes and print the forwarded URLs immediately.
+
+### 3. Open the Dashboard
+
+After starting, the **Ports panel** (bottom of VS Code) shows two forwarded ports.
+Click the 🌐 globe icon next to port **5173** to open the dashboard in your browser.
+
+| Service | Port | Forwarded URL |
+|---------|------|---------------|
+| Dashboard (Vite) | 5173 | `https://<codespace>-5173.app.github.dev` |
+| API / Swagger | 8000 | `https://<codespace>-8000.app.github.dev/docs` |
+
+### 4. Sharing the Demo (Port Visibility)
+
+By default Codespaces ports are **Private** (only your account can open them).
+To share with a client or colleague:
+
+1. Open the **Ports** panel.
+2. Right-click port `5173` → **Port Visibility → Public**.
+3. Copy the URL and share it. Anyone with the link can view the dashboard.
+
+> **Tip**: Keep the backend port (`8000`) private — it only needs to be accessible
+> from inside the codespace (the Vite proxy handles it automatically).
+
+### 5. Stop the Demo
+
+```bash
+make demo-stop
+# or
+bash scripts/demo/stop.sh
+```
+
+### 6. Check Status
+
+```bash
+make demo-status
+# or
+bash scripts/demo/status.sh
+```
+
+### 7. Stop the Codespace (avoid burning compute)
+
+When you're done, **suspend** the codespace from GitHub to avoid unnecessary charges:
+
+> **github.com → Your repo → Code → Codespaces → ⋯ → Stop codespace**
+
+Codespaces automatically suspend after 30 min of inactivity by default.
+All your files are preserved — just restart the codespace and run `make demo` again.
+
+---
+
+## Setup & Running (Local)
 
 ### Backend Setup
 

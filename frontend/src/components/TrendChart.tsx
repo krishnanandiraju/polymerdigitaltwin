@@ -24,15 +24,29 @@ function TrendChart({ tagName }: TrendChartProps) {
                 const startTime = new Date(now.getTime() - 30 * 60 * 1000).toISOString(); // 30 minutes
                 const endTime = now.toISOString();
 
-                const response = await getTagTrend(tagName, startTime, endTime);
-                const chartData = response.readings.map((reading: any) => ({
+                // Fetch with 5 second timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+                const response = await Promise.race([
+                    getTagTrend(tagName, startTime, endTime),
+                    new Promise((_, reject) => 
+                        timeoutId && setTimeout(() => reject(new Error('Request timeout')), 5000)
+                    )
+                ]);
+                
+                clearTimeout(timeoutId);
+                
+                const chartData = (response as any).readings?.map((reading: any) => ({
                     time: new Date(reading.timestamp).toLocaleTimeString('en-IN', { hour12: false }),
                     value: reading.value,
-                }));
+                })) || [];
                 setData(chartData);
-                setChartConfig(response.limits);
+                setChartConfig((response as any).limits || {});
             } catch (err) {
-                setError(err instanceof Error ? err.message : 'Failed to fetch trend data');
+                console.debug('Trend chart load skipped');
+                setError('');  // Don't show error, just skip
+                setData([]);
             } finally {
                 setLoading(false);
             }

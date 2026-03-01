@@ -1,0 +1,58 @@
+{
+    "name": "Manas Polymers Digital Twin",
+
+    // Python 3.11 base; Node 20 added via feature
+    "image": "mcr.microsoft.com/devcontainers/python:1-3.11-bullseye",
+
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "20"
+        }
+    },
+
+    // Install deps only — server is NOT started here.
+    // Run `make demo` or `Demo: Start` task when you're ready.
+    "postCreateCommand": "pip install -r backend/requirements.txt && cd frontend && npm install",
+
+    // VS Code extensions pre-installed in the codespace
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "bradlc.vscode-tailwindcss",
+                "ms-azuretools.vscode-docker"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "editor.formatOnSave": true,
+                "editor.defaultFormatter": "esbenp.prettier-vscode",
+                "[python]": {
+                    "editor.defaultFormatter": "ms-python.python"
+                }
+            }
+        }
+    },
+
+    // Port forwarding: backend API + frontend dashboard
+    "forwardPorts": [8000, 5173],
+
+    "portsAttributes": {
+        "8000": {
+            "label": "Backend API (FastAPI)",
+            "onAutoForward": "notify"
+        },
+        "5173": {
+            "label": "Demo Dashboard (Vite)",
+            "onAutoForward": "openBrowser"
+        }
+    },
+
+    // Persist node_modules and pip cache across rebuilds
+    "mounts": [
+        "source=manas-polymers-nodemodules,target=${containerWorkspaceFolder}/frontend/node_modules,type=volume",
+        "source=manas-polymers-pipcache,target=/root/.cache/pip,type=volume"
+    ]
+}

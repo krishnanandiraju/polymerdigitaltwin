@@ -4,7 +4,7 @@ import Gauge from '../components/Gauge';
 import TrendChart from '../components/TrendChart';
 import CavityHeatmap from '../components/CavityHeatmap';
 import Trajectory from '../components/Trajectory';
-import Schematic from '../components/Schematic';
+import Schematic from '../components/Schematic_Enhanced';
 import Notifications from '../components/Notifications';
 import { Snapshot } from '../api';
 import { getShiftReport } from '../api';
@@ -14,6 +14,13 @@ interface DashboardProps {
 }
 
 function Dashboard({ snapshot }: DashboardProps) {
+    console.log('Dashboard rendered with snapshot:', {
+        timestamp: snapshot.timestamp,
+        production_rate: snapshot.production_rate,
+        tags_count: snapshot.tags?.length,
+        alerts_count: snapshot.alerts?.length,
+        cavity_risks_count: snapshot.cavity_risks?.length,
+    });
     const [selectedTag, setSelectedTag] = useState('melt_temp');
     const [reportHTML, setReportHTML] = useState<string | null>(null);
     const [loadingReport, setLoadingReport] = useState(false);

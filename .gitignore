@@ -33,12 +33,17 @@ ENV/
 .env
 .env.local
 
-# IDE
-.vscode/
+# IDE — keep VS Code tasks/settings, only ignore personal/local files
+.vscode/settings.json
+.vscode/launch.json
+.vscode/*.code-snippets
 .idea/
 *.swp
 *.swo
 *~
+
+# Demo runtime PID files
+.demo-pids/
 
 # Node
 node_modules/

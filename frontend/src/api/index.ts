@@ -212,15 +212,23 @@ export async function getWeeklyReport(startTime: string, endTime: string): Promi
 // WebSocket hook
 export function useWebSocket(onMessage: (data: any) => void) {
     useEffect(() => {
-        let ws: WebSocket;
-        let reconnectTimer: number;
+        let ws: WebSocket | null = null;
+        let reconnectTimer: NodeJS.Timeout | null = null;
+        let connectionAttempts = 0;
+        const maxAttempts = 3;
 
         function connect() {
+            if (connectionAttempts >= maxAttempts) {
+                console.log('WebSocket: Max connection attempts reached, using REST API polling');
+                return;
+            }
+
             try {
                 ws = new WebSocket(WS_BASE);
 
                 ws.onopen = () => {
                     console.log('WebSocket connected');
+                    connectionAttempts = 0; // Reset on successful connection
                 };
 
                 ws.onmessage = (event) => {
@@ -228,27 +236,35 @@ export function useWebSocket(onMessage: (data: any) => void) {
                         const data = JSON.parse(event.data);
                         onMessage(data);
                     } catch (error) {
-                        console.error('Error parsing WebSocket message:', error);
+                        console.debug('Error parsing WebSocket message (using REST API)');
                     }
                 };
 
-                ws.onerror = (error) => {
-                    console.error('WebSocket error:', error);
-                    scheduleReconnect();
+                ws.onerror = () => {
+                    // Silently fail and let REST API handle it
+                    connectionAttempts++;
+                    if (connectionAttempts < maxAttempts) {
+                        scheduleReconnect();
+                    }
                 };
 
                 ws.onclose = () => {
-                    console.log('WebSocket connection closed');
-                    scheduleReconnect();
+                    connectionAttempts++;
+                    if (connectionAttempts < maxAttempts) {
+                        scheduleReconnect();
+                    }
                 };
             } catch (error) {
-                console.error('WebSocket connection error:', error);
-                scheduleReconnect();
+                connectionAttempts++;
+                if (connectionAttempts < maxAttempts) {
+                    scheduleReconnect();
+                }
             }
         }
 
         function scheduleReconnect() {
-            reconnectTimer = window.setTimeout(connect, 5000);
+            if (reconnectTimer) clearTimeout(reconnectTimer);
+            reconnectTimer = setTimeout(connect, 3000);
         }
 
         connect();
@@ -257,7 +273,7 @@ export function useWebSocket(onMessage: (data: any) => void) {
             if (reconnectTimer) {
                 clearTimeout(reconnectTimer);
             }
-            if (ws) {
+            if (ws && ws.readyState === WebSocket.OPEN) {
                 ws.close();
             }
         };
