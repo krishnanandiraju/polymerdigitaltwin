@@ -8,6 +8,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 PID_DIR="${ROOT}/.demo-pids"
 
+BACKEND_PORT="${BACKEND_PORT:-${API_PORT:-8000}}"
+FRONTEND_PORT="${FRONTEND_PORT:-5173}"
+
 BACKEND_PID_FILE="$PID_DIR/backend.pid"
 FRONTEND_PID_FILE="$PID_DIR/frontend.pid"
 
@@ -27,23 +30,23 @@ echo "════════════════════════�
 echo ""
 
 # Backend
-if is_running "$BACKEND_PID_FILE"; then
+if is_running "$BACKEND_PID_FILE" && port_listening "$BACKEND_PORT"; then
     BE_PID="$(cat "$BACKEND_PID_FILE")"
-    echo "  Backend  (:8000)  🟢  RUNNING  (PID $BE_PID)"
-elif port_listening 8000; then
-    echo "  Backend  (:8000)  🟡  PORT IN USE  (started outside this script)"
+    echo "  Backend  (:${BACKEND_PORT})  🟢  RUNNING  (PID $BE_PID)"
+elif port_listening "$BACKEND_PORT"; then
+    echo "  Backend  (:${BACKEND_PORT})  🟡  PORT IN USE  (started outside this script)"
 else
-    echo "  Backend  (:8000)  🔴  STOPPED"
+    echo "  Backend  (:${BACKEND_PORT})  🔴  STOPPED"
 fi
 
 # Frontend
-if is_running "$FRONTEND_PID_FILE"; then
+if is_running "$FRONTEND_PID_FILE" && port_listening "$FRONTEND_PORT"; then
     FE_PID="$(cat "$FRONTEND_PID_FILE")"
-    echo "  Frontend (:5173)  🟢  RUNNING  (PID $FE_PID)"
-elif port_listening 5173; then
-    echo "  Frontend (:5173)  🟡  PORT IN USE  (started outside this script)"
+    echo "  Frontend (:${FRONTEND_PORT})  🟢  RUNNING  (PID $FE_PID)"
+elif port_listening "$FRONTEND_PORT"; then
+    echo "  Frontend (:${FRONTEND_PORT})  🟡  PORT IN USE  (started outside this script)"
 else
-    echo "  Frontend (:5173)  🔴  STOPPED"
+    echo "  Frontend (:${FRONTEND_PORT})  🔴  STOPPED"
 fi
 
 echo ""
@@ -51,15 +54,15 @@ echo ""
 # Codespaces vs local URLs
 if [[ -n "${CODESPACE_NAME:-}" ]]; then
     echo "  🌐  Codespaces URLs:"
-    echo "      Dashboard  →  https://${CODESPACE_NAME}-5173.app.github.dev"
-    echo "      API docs   →  https://${CODESPACE_NAME}-8000.app.github.dev/docs"
+    echo "      Dashboard  →  https://${CODESPACE_NAME}-${FRONTEND_PORT}.app.github.dev"
+    echo "      API docs   →  https://${CODESPACE_NAME}-${BACKEND_PORT}.app.github.dev/docs"
     echo ""
     echo "  ℹ️   Check the Ports panel (Ctrl+Shift+P → 'Ports: Focus on Ports View')"
     echo "      to manage visibility (Private / Public) for each forwarded port."
 else
     echo "  🌐  Local URLs:"
-    echo "      Dashboard  →  http://localhost:5173"
-    echo "      API docs   →  http://localhost:8000/docs"
+    echo "      Dashboard  →  http://localhost:${FRONTEND_PORT}"
+    echo "      API docs   →  http://localhost:${BACKEND_PORT}/docs"
 fi
 
 echo ""

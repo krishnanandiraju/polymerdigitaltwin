@@ -1,6 +1,7 @@
 # Manas Polymers Digital Twin + Reporting Wall
 
 ## Overview
+
 Digital Twin + Reporting Wall for PET Preforms Injection Moulding at Manas Polymers.
 A single "Factory Data Monitoring" wall with multiple panels: gauge cards, trend chart, temperature card, trajectory panel, green status notification, plus a process schematic at the bottom.
 
@@ -80,6 +81,7 @@ Run the entire stack in a browser — zero local install required.
 Press `Ctrl+Shift+P` → `Tasks: Run Task` → **Demo: Start**
 
 **Option B — Terminal**
+
 ```bash
 make demo
 # or
@@ -89,15 +91,23 @@ bash scripts/demo/start.sh
 Both commands start the FastAPI backend (`:8000`) and Vite frontend (`:5173`) as
 background processes and print the forwarded URLs immediately.
 
+Optional port overrides (useful if defaults are occupied):
+
+```bash
+BACKEND_PORT=9000 FRONTEND_PORT=5174 make demo
+```
+
+The demo scripts and frontend proxy now honor these values automatically.
+
 ### 3. Open the Dashboard
 
 After starting, the **Ports panel** (bottom of VS Code) shows two forwarded ports.
 Click the 🌐 globe icon next to port **5173** to open the dashboard in your browser.
 
-| Service | Port | Forwarded URL |
-|---------|------|---------------|
-| Dashboard (Vite) | 5173 | `https://<codespace>-5173.app.github.dev` |
-| API / Swagger | 8000 | `https://<codespace>-8000.app.github.dev/docs` |
+| Service          | Port | Forwarded URL                                  |
+| ---------------- | ---- | ---------------------------------------------- |
+| Dashboard (Vite) | 5173 | `https://<codespace>-5173.app.github.dev`      |
+| API / Swagger    | 8000 | `https://<codespace>-8000.app.github.dev/docs` |
 
 ### 4. Sharing the Demo (Port Visibility)
 
@@ -195,22 +205,28 @@ npm run dev
 ### Dashboard Wall Layout
 
 **Left Column**:
+
 - Quality & Output: Scrap %, defects histogram, cavity hot spots
 - Process Stability: 3 gauges (cycle stability, temp stability, pressure stability)
 
 **Center**:
+
 - Trend chart with acceptable band
 
 **Center-Right**:
+
 - Mould Temperature: Numeric card + mini sparkline
 
 **Right**:
+
 - Lot / WIP Trajectory: Mock batch path through process steps
 
 **Bottom Strip**:
+
 - Process schematic: Dryer → Hopper → Injection → Cooling → QC → Packing
 
 **Notifications**:
+
 - Green toast for "All within spec"
 - Orange/red for warnings/critical with action hints
 
@@ -223,6 +239,7 @@ npm run dev
 ### Demo Mode
 
 The simulator includes a demo scenario:
+
 1. First 2 minutes: Normal operation
 2. After 2 minutes: Mould temp zone drift introduces alerts + cavity hotspots
 
@@ -241,6 +258,7 @@ DEMO_MODE_ENABLED=True
 ## Tech Stack
 
 ### Backend
+
 - Python 3.9+
 - FastAPI
 - WebSocket
@@ -250,6 +268,7 @@ DEMO_MODE_ENABLED=True
 - Uvicorn (ASGI server)
 
 ### Frontend
+
 - React 18 + TypeScript
 - Vite (build tool)
 - Recharts (charts)

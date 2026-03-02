@@ -8,6 +8,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 PID_DIR="${ROOT}/.demo-pids"
 
+BACKEND_PORT="${BACKEND_PORT:-${API_PORT:-8000}}"
+FRONTEND_PORT="${FRONTEND_PORT:-5173}"
+
 BACKEND_PID_FILE="$PID_DIR/backend.pid"
 FRONTEND_PID_FILE="$PID_DIR/frontend.pid"
 
@@ -66,8 +69,8 @@ kill_port() {
     fi
 }
 
-kill_port 8000 "FastAPI backend"
-kill_port 5173 "Vite frontend"
+kill_port "$BACKEND_PORT" "FastAPI backend"
+kill_port "$FRONTEND_PORT" "Vite frontend"
 
 echo ""
 if $stopped_any; then
