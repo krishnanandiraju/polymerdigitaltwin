@@ -10,6 +10,12 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 PID_DIR="${ROOT}/.demo-pids"
 mkdir -p "$PID_DIR"
 
+BACKEND_PORT="${BACKEND_PORT:-${API_PORT:-8000}}"
+FRONTEND_PORT="${FRONTEND_PORT:-5173}"
+BACKEND_HOST="${BACKEND_HOST:-0.0.0.0}"
+FRONTEND_HOST="${FRONTEND_HOST:-0.0.0.0}"
+BACKEND_TARGET="${BACKEND_TARGET:-http://localhost:${BACKEND_PORT}}"
+
 BACKEND_PID_FILE="$PID_DIR/backend.pid"
 FRONTEND_PID_FILE="$PID_DIR/frontend.pid"
 BACKEND_LOG="$PID_DIR/backend.log"
@@ -38,15 +44,15 @@ echo "════════════════════════�
 
 # ── Backend (FastAPI / uvicorn) ───────────────────────────────────────────────
 echo ""
-echo "▶  Starting Backend (FastAPI on :8000)…"
+echo "▶  Starting Backend (FastAPI on :${BACKEND_PORT})…"
 
-if ! port_free 8000; then
-    echo "   ⚠️  Port 8000 already in use — skipping backend start."
+if ! port_free "$BACKEND_PORT"; then
+    echo "   ⚠️  Port ${BACKEND_PORT} already in use — skipping backend start."
 else
     cd "$ROOT/backend"
     nohup python -m uvicorn main:app \
-        --host 0.0.0.0 \
-        --port 8000 \
+        --host "$BACKEND_HOST" \
+        --port "$BACKEND_PORT" \
         --reload \
         > "$BACKEND_LOG" 2>&1 &
     echo $! > "$BACKEND_PID_FILE"
@@ -55,13 +61,13 @@ fi
 
 # ── Frontend (Vite / React) ───────────────────────────────────────────────────
 echo ""
-echo "▶  Starting Frontend (Vite on :5173)…"
+echo "▶  Starting Frontend (Vite on :${FRONTEND_PORT})…"
 
-if ! port_free 5173; then
-    echo "   ⚠️  Port 5173 already in use — skipping frontend start."
+if ! port_free "$FRONTEND_PORT"; then
+    echo "   ⚠️  Port ${FRONTEND_PORT} already in use — skipping frontend start."
 else
     cd "$ROOT/frontend"
-    nohup npm run dev -- --host 0.0.0.0 --port 5173 \
+    nohup env VITE_BACKEND_TARGET="$BACKEND_TARGET" npm run dev -- --host "$FRONTEND_HOST" --port "$FRONTEND_PORT" \
         > "$FRONTEND_LOG" 2>&1 &
     echo $! > "$FRONTEND_PID_FILE"
     echo "   ✅ Frontend PID $(cat "$FRONTEND_PID_FILE")  →  Log: $FRONTEND_LOG"
@@ -70,8 +76,8 @@ fi
 # ── Codespaces awareness ──────────────────────────────────────────────────────
 echo ""
 if [[ -n "${CODESPACE_NAME:-}" ]]; then
-    FRONTEND_URL="https://${CODESPACE_NAME}-5173.app.github.dev"
-    BACKEND_URL="https://${CODESPACE_NAME}-8000.app.github.dev"
+    FRONTEND_URL="https://${CODESPACE_NAME}-${FRONTEND_PORT}.app.github.dev"
+    BACKEND_URL="https://${CODESPACE_NAME}-${BACKEND_PORT}.app.github.dev"
     echo "  🚀  Running inside GitHub Codespaces!"
     echo ""
     echo "  Dashboard  →  $FRONTEND_URL"
@@ -80,8 +86,8 @@ if [[ -n "${CODESPACE_NAME:-}" ]]; then
     echo "  ℹ️  If the ports panel shows visibility as 'Private', right-click"
     echo "     the port and choose 'Port Visibility → Public' for sharing."
 else
-    echo "  Dashboard  →  http://localhost:5173"
-    echo "  API docs   →  http://localhost:8000/docs"
+    echo "  Dashboard  →  http://localhost:${FRONTEND_PORT}"
+    echo "  API docs   →  http://localhost:${BACKEND_PORT}/docs"
 fi
 
 echo ""
