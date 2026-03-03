@@ -1,17 +1,17 @@
-# Manas Polymers Digital Twin + Reporting Wall
+# Manufacturing Digital Twin + Reporting Wall
 
 ## Overview
-Digital Twin + Reporting Wall for PET Preforms Injection Moulding at Manas Polymers.
+Generic Digital Twin + Reporting Wall for repetitive manufacturing processes (injection moulding, thermoforming, extrusion, die-casting, etc.).
 A single "Factory Data Monitoring" wall with multiple panels: gauge cards, trend chart, temperature card, trajectory panel, green status notification, plus a process schematic at the bottom.
 
 ## SCOPING QUESTIONS & ANSWERS
 
-1. **Live or simulated data?** → Simulated (realistic PET preform injection moulding data)
+1. **Live or simulated data?** → Simulated (realistic manufacturing process data)
 2. **Stack?** → Python FastAPI + WebSocket backend, React (Vite) + TypeScript frontend
-3. **How many lines?** → 1 injection moulding line
+3. **How many lines?** → 1 production line
 4. **Cavities per mould?** → 48 cavities, cavity-wise rejection tags available
-5. **CTQs?** → preform weight, neck finish dimension, haze/clarity proxy, short shot/flash reject rate
-6. **Process tags?** → melt_temp, mould_temp, injection_pressure, hold_pressure, hold_time, cycle_time, screw_speed, cooling_time, dryer_dewpoint, chiller_temp
+5. **CTQs?** → product weight, dimensional accuracy, quality proxy, defect rates (configurable per process)
+6. **Process tags?** → temperature (process/tool), pressure (configurable), timing, speed, environmental controls (configurable)
 7. **Alerts?** → In-app only for MVP
 8. **Trajectory panel?** → Yes — mock "WIP batch path" through plant process steps
 9. **User roles?** → Single admin for MVP
@@ -20,7 +20,7 @@ A single "Factory Data Monitoring" wall with multiple panels: gauge cards, trend
 ## Project Structure
 
 ```
-manasPolymers/
+digital-twin/
 ├── backend/
 │   ├── main.py                 # FastAPI entry point
 │   ├── requirements.txt        # Python dependencies
@@ -233,7 +233,7 @@ Environment variables can be configured in `backend/.env`:
 ```env
 API_PORT=8000
 WEBSOCKET_PORT=8000
-DATABASE_URL=sqlite:///./manas_polymers.db
+DATABASE_URL=sqlite:///./digital_twin.db
 SIMULATION_SPEED=1.0  # 1x = real time
 DEMO_MODE_ENABLED=True
 ```

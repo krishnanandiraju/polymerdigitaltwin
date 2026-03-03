@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
 # scripts/demo/stop.sh
-# Stop the Manas Polymers Digital Twin demo (backend + frontend).
+# Stop the Manufacturing Digital Twin demo (backend + frontend).
 # =============================================================================
 set -euo pipefail
 
@@ -44,7 +44,7 @@ stop_pid_file() {
 # ── Stop by PID file ──────────────────────────────────────────────────────────
 echo ""
 echo "══════════════════════════════════════════════════════════"
-echo "  🏭  Manas Polymers Digital Twin  —  Stopping Demo"
+echo "  🏭  Manufacturing Digital Twin  —  Stopping Demo"
 echo "══════════════════════════════════════════════════════════"
 echo ""
 

@@ -46,7 +46,7 @@ function App() {
                 <div className="text-center">
                     <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mb-4"></div>
                     <h2 className="text-xl font-semibold text-gray-200">Loading Dashboard...</h2>
-                    <p className="text-gray-400 mt-2">Connecting to Manas Polymers Digital Twin</p>
+                    <p className="text-gray-400 mt-2">Connecting to Manufacturing Digital Twin</p>
                     <p className="text-gray-500 text-xs mt-4">Check browser console (F12) for logs</p>
                 </div>
             </div>

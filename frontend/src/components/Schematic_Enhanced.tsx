@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import TwinModal from './TwinModal';
 import DryerDigitalTwin from './DryerDigitalTwin';
-import InjectionMachineDigitalTwin from './InjectionMachineDigitalTwin';
+import MachineDigitalTwin from './MachineDigitalTwin';
 
 function SchematicEnhanced() {
     const [materialFlow, setMaterialFlow] = useState(94);
@@ -350,7 +350,7 @@ function SchematicEnhanced() {
                 onClose={() => setSelectedMachine(null)}
                 title="Injection Moulding Machine - 3D Digital Twin"
             >
-                <InjectionMachineDigitalTwin />
+                <MachineDigitalTwin />
             </TwinModal>
         </div>
     );

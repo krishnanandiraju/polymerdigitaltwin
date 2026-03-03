@@ -59,7 +59,7 @@ function Dashboard({ snapshot }: DashboardProps) {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `manas-polymers-shift-report-${now.toISOString().split('T')[0]}.html`;
+            a.download = `shift-report-${now.toISOString().split('T')[0]}.html`;
             a.click();
             URL.revokeObjectURL(url);
         } catch (error) {
@@ -81,10 +81,10 @@ function Dashboard({ snapshot }: DashboardProps) {
                             </div>
                             <div>
                                 <h1 className="text-xl font-bold text-white">
-                                    Factory Data Monitoring — Manas Polymers
+                                    Factory Data Monitoring
                                 </h1>
                                 <p className="text-sm text-gray-400">
-                                    {snapshot.timestamp} • PET Preforms Injection Moulding
+                                    {snapshot.timestamp} • Factory Data Monitoring
                                 </p>
                             </div>
                         </div>

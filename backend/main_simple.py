@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 
 app = FastAPI(
-    title="Manas Polymers API",
+    title="Manufacturing Digital Twin API",
     version="1.0.0",
 )
 

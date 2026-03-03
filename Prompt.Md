@@ -1,4 +1,4 @@
-You are my senior full-stack + industrial data engineer working with me inside VS Code. We are building an MVP “Digital Twin + Reporting Wall” for Manas Polymers (PET preforms injection moulding), inspired by the attached dairy digital-pipeline video’s style: a single “Factory Data Monitoring” wall with multiple panels (gauge cards, trend chart, numeric temperature card, a route/trajectory panel, and a green status notification), plus a simplified process schematic at the bottom.
+You are my senior full-stack + industrial data engineer working with me inside VS Code. We are building an MVP "Digital Twin + Reporting Wall" for a generic manufacturing process (injection moulding, thermoforming, die-casting, extrusion, etc.), inspired by the attached dairy digital-pipeline video's style: a single "Factory Data Monitoring" wall with multiple panels (gauge cards, trend chart, numeric temperature card, a route/trajectory panel, and a green status notification), plus a simplified process schematic at the bottom.
 
 
 
@@ -178,7 +178,7 @@ B) Dashboard/Reporting Framework (inspired by dairy video)
 
 \- Layout:
 
-&nbsp; - Header: “Factory Data Monitoring — Manas Polymers (PET Preforms)”
+&nbsp; - Header: "Factory Data Monitoring — Manufacturing Digital Twin"
 
 &nbsp; - Left column:
 

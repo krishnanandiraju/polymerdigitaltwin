@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Run the Manas Polymers backend with uvicorn"""
+"""Run the Manufacturing Digital Twin backend with uvicorn"""
 
 import uvicorn
 import os

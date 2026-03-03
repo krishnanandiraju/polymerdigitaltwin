@@ -6,12 +6,12 @@ from datetime import timedelta
 class Settings(BaseSettings):
     API_PORT: int = 8000
     WEBSOCKET_PORT: int = 8000
-    DATABASE_URL: str = "sqlite:///./manas_polymers.db"
+    DATABASE_URL: str = "sqlite:///./digital_twin.db"
     SIMULATION_SPEED: float = 1.0
     DEMO_MODE_ENABLED: bool = True
     DEMO_DRIFT_START_MINUTES: int = 2
 
-    # Process parameters (PET preforms injection moulding defaults)
+    # Process parameters (configurable for different manufacturing processes)
     NUM_CAVITIES: int = 48
     CYCLE_TIME_SEC: float = 10.0
     PRODUCTION_RATE: int = 360  # parts per hour

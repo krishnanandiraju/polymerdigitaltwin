@@ -22,7 +22,7 @@ port_listening() {
 
 echo ""
 echo "══════════════════════════════════════════════════════════"
-echo "  🏭  Manas Polymers Digital Twin  —  Demo Status"
+echo "  🏭  Manufacturing Digital Twin  —  Demo Status"
 echo "══════════════════════════════════════════════════════════"
 echo ""
 

@@ -1,5 +1,5 @@
 # =============================================================================
-# Manas Polymers Digital Twin — Makefile
+# Manufacturing Digital Twin — Makefile
 # =============================================================================
 .PHONY: demo demo-stop demo-status install install-backend install-frontend help
 
@@ -31,7 +31,7 @@ install-frontend:
 ## Print this help
 help:
 	@echo ""
-	@echo "  Manas Polymers Digital Twin"
+	@echo "  Manufacturing Digital Twin"
 	@echo ""
 	@echo "  make demo          Start backend + frontend (background)"
 	@echo "  make demo-stop     Stop both servers"

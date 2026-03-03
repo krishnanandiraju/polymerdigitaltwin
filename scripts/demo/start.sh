@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
 # scripts/demo/start.sh
-# Start the Manas Polymers Digital Twin demo (backend + frontend).
+# Start the Manufacturing Digital Twin demo (backend + frontend).
 # Works in GitHub Codespaces and local Linux/macOS terminals.
 # =============================================================================
 set -euo pipefail
@@ -33,7 +33,7 @@ fi
 
 echo ""
 echo "══════════════════════════════════════════════════════════"
-echo "  🏭  Manas Polymers Digital Twin  —  Starting Demo"
+echo "  🏭  Manufacturing Digital Twin  —  Starting Demo"
 echo "══════════════════════════════════════════════════════════"
 
 # ── Backend (FastAPI / uvicorn) ───────────────────────────────────────────────

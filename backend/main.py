@@ -15,8 +15,8 @@ Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(
-    title="Manas Polymers Digital Twin API",
-    description="API for PET Preforms Injection Moulding Digital Twin and Reporting Wall",
+    title="Manufacturing Digital Twin API",
+    description="API for Manufacturing Digital Twin and Reporting Wall (generic framework)",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc"

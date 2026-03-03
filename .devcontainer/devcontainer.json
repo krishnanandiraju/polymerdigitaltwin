@@ -1,5 +1,5 @@
 {
-    "name": "Manas Polymers Digital Twin",
+    "name": "Manufacturing Digital Twin",
 
     // Python 3.11 base; Node 20 added via feature
     "image": "mcr.microsoft.com/devcontainers/python:1-3.11-bullseye",
@@ -52,7 +52,7 @@
 
     // Persist node_modules and pip cache across rebuilds
     "mounts": [
-        "source=manas-polymers-nodemodules,target=${containerWorkspaceFolder}/frontend/node_modules,type=volume",
-        "source=manas-polymers-pipcache,target=/root/.cache/pip,type=volume"
+        "source=digitaltwin-nodemodules,target=${containerWorkspaceFolder}/frontend/node_modules,type=volume",
+        "source=digitaltwin-pipcache,target=/root/.cache/pip,type=volume"
     ]
 }
